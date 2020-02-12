@@ -13,6 +13,9 @@ router.get('/',(req, res)=>{
 router.route('/todo')
     .get(contactController.viewTodo)
     .post(contactController.newTodo)
+
+router.route('/todo/:todo_id')
+    .patch(contactController.updateTodo)
     
 router.route('/contacts')
     .get(contactController.index)

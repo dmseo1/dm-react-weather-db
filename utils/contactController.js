@@ -96,6 +96,8 @@ exports.view =(req , res)=>{
     })
 }
 
+
+
 exports.update = (req, res)=>{
     Contact.findById(req.params.contact_id ,(err , result)=>{
         if(!err){
@@ -119,6 +121,36 @@ exports.update = (req, res)=>{
         } else {
             res.json({
                 message:"error",
+                data:err
+            })
+        }
+    })
+}
+
+exports.updateTodo = (req, res) => {
+    TodoContact.find({"id" : req.params.todo_id}, (err, result) => {
+        console.log("req.params.todo_id: ", req.params.todo_id);
+        if(!err) { 
+            result[0].id = result[0].id
+            result[0].title = result[0].title
+            result[0].status = req.body.status
+            result[0].save((err) => {
+                if(err) {
+                    res.json({
+                        status:"error",
+                        message:err
+                    })
+                } else {
+                    res.json({
+                        message:"Todo Status Changed",
+                        data:result[0]
+                    })
+
+                }
+            })
+        } else {
+            res.json({
+                message: "error",
                 data:err
             })
         }
